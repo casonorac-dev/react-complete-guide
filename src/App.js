@@ -37,11 +37,21 @@ class App extends Component {
 
     render() {
         //IMPORTANTE: () => this.switchNameHandler('¡Carlitos!') esta sintaxis es conveniente pero puede ser ineficiente, mejor usar bind
+        const style = {
+            backgroundColor: 'white',
+            font: 'inherit',
+            border: '1px solid blue',
+            padding: '8px',
+            cursor: 'pointer'
+        };
+        
         return ( 
             <div className = "App"> 
                 <h1> Hi, I 'm a React App</h1> 
                 <p>This is really working!</p>
-                <button onClick={() => this.switchNameHandler('¡Carlitos!')}>Switch Name</button> 
+                <button 
+                    style={style}
+                    onClick={() => this.switchNameHandler('¡Carlitos!')}>Switch Name</button> 
                 <Person 
                     name={this.state.persons[0].name} 
                     age={this.state.persons[0].age} />
