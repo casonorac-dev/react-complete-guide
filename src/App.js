@@ -5,10 +5,10 @@ import './App.css';
 
 class App extends Component {
     state = {
-        persons: [
-            {name: 'Carlos', age: 31},
-            {name: 'Antonio', age: 22},
-            {name: 'Monica', age: 31}
+        persons: [ //El ID de los elementos puede ser cualquier valor siempre y cuando se único.
+            {id: '1', name: 'Carlos', age: 31},
+            {id: '2', name: 'Antonio', age: 22},
+            {id: '3', name: 'Monica', age: 31}
         ],
         otherState: 'Some other value',
         showPersons: false
@@ -26,14 +26,30 @@ class App extends Component {
     //     });
     // }
 
-    nameChangeHandler = (event) => {
-        this.setState({
-            persons: [
-                {name: 'Carlitos', age: 31},
-                {name: event.target.value, age: 25},
-                {name: 'Moni', age: 31}
-            ]
+    nameChangeHandler = (event, id) => {
+        const personIndex = this.state.persons.findIndex(p => {
+            return p.id === id;
         });
+
+        const person = {...this.state.persons[personIndex]}; //Evitamos mutar el estado directamente y agregarmos los valores a un nuevo objeto copiándolos desde el original con el operador ...
+
+        /** Este sería otra aproximación a la línea de arriba:
+         * const person = Object.assign({}, this.state.persons[personIndex]);*/
+        
+        person.name = event.target.value; //I'm working with a copy of the current state object
+        const persons = [...this.state.persons]; //I'm working with a copy of the current state
+        persons[personIndex] = person; //I'm updating value on the copy of the state
+
+        this.setState({ persons: persons }); //I'm updating real state with the modified copy value
+
+        // This is the old way I have before do the changes 
+        // this.setState({
+        //     persons: [
+        //         {name: 'Carlitos', age: 31},
+        //         {name: event.target.value, age: 25},
+        //         {name: 'Moni', age: 31}
+        //     ]
+        // });
     }
 
     togglePersonsHandler = () => {
@@ -42,7 +58,9 @@ class App extends Component {
     }
 
     deletePersonHandler = (personIndex) => {
-        const persons = this.state.persons;
+        //const persons = this.state.persons.slice(); //A good practice is to create a copy of your array for manipulating it.
+        /** Siempre debe actualizar el estado de manera inmutable para que, sin mutar el estado original, primero cree una copia, cámbiela y luego actualice el estado con el cambio de estado realizado.*/
+        const persons = [...this.state.persons];//Modern version of line above.
         persons.splice(personIndex, 1);
         this.setState({persons: persons});
     }
@@ -66,7 +84,9 @@ class App extends Component {
                       return <Person 
                         name={person.name} 
                         age={person.age}
-                        click={() => this.deletePersonHandler(index)} />  //Cuando se tiene argumentos en una función, se manda ejecutar con el () =>, si no tiene argumentos, se manda llamar sin el () =>
+                        click={() => this.deletePersonHandler(index)}
+                        key={person.id}
+                        changed={(event) => this.nameChangeHandler(event, person.id)} />  //Cuando se tiene argumentos en una función, se manda ejecutar con el () =>, si no tiene argumentos, se manda llamar sin el () =>
                     })}
                     {/* The above lines replaces this block
                     <Person 
