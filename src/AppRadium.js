@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import Person from './Person/Person';
+import Radium, { StyleRoot } from 'radium';
 import './App.css';
 
 class App extends Component {
@@ -73,7 +74,11 @@ class App extends Component {
             font: 'inherit',
             border: '1px solid blue',
             padding: '8px',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            ':hover': {
+                backgroundColor: 'lightgreen',
+                color: 'black'
+            }
         };
         
         let persons = null;
@@ -119,6 +124,7 @@ class App extends Component {
         }
 
         return ( 
+            <StyleRoot>
             <div className = "App"> 
                 <h1> Hi, I 'm a React App</h1> 
                 <p className={classes.join(' ')}>This is really working!</p>
@@ -129,8 +135,9 @@ class App extends Component {
                 {/* Condition ? if true : if false //Esto es una expresión ternaria */}
                 {persons}                
             </div>
+            </StyleRoot>
         );
     }
 }
 
-export default App;
+export default Radium(App);
