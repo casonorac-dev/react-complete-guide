@@ -44,7 +44,7 @@ class App extends Component {
 
         this.setState({ persons: persons }); //I'm updating real state with the modified copy value
 
-        // This is the old way I have before do the changes 
+        // This is the old way I had before doing the changes 
         // this.setState({
         //     persons: [
         //         {name: 'Carlitos', age: 31},
@@ -79,12 +79,11 @@ class App extends Component {
                         changed={this.nameChangeHandler} />;
         }
 
-        
-
         return ( 
             <div className ={classes.App}> 
                 {/* Condition ? if true : if false //Esto es una expresión ternaria */}
                 <Cockpit
+                    appTitle={this.props.appTitle}
                     showPersons={this.state.showPersons}
                     persons={this.state.persons}
                     clicked={this.togglePersonsHandler} />
