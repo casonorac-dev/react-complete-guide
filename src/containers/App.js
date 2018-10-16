@@ -6,15 +6,38 @@ import classes from './App.css';
 import { throws } from 'assert';
 
 class App extends Component {
-    state = {
-        persons: [ //El ID de los elementos puede ser cualquier valor siempre y cuando se único.
-            {id: '1', name: 'Carlos', age: 31},
-            {id: '2', name: 'Antonio', age: 22},
-            {id: '3', name: 'Monica', age: 31}
-        ],
-        otherState: 'Some other value',
-        showPersons: false
-    } //Can only be build on components done like this, extending Component
+    constructor(props) {
+        super(props);
+        console.log('[App.js] Inside constructor', props);
+        this.state = {
+            persons: [ //El ID de los elementos puede ser cualquier valor siempre y cuando se único.
+                {id: '1', name: 'Carlos', age: 31},
+                {id: '2', name: 'Antonio', age: 22},
+                {id: '3', name: 'Monica', age: 31}
+            ],
+            otherState: 'Some other value',
+            showPersons: false
+        }
+    }
+
+    componentWillMount() {
+        console.log('[App.js] Inside componentWillMount()');
+    }
+
+    componentDidMount() {
+        console.log('[App.js] Inside componentDidMount()');
+    }
+
+    //This is modern way to set state (React 16)
+    // state = {
+    //     persons: [ //El ID de los elementos puede ser cualquier valor siempre y cuando se único.
+    //         {id: '1', name: 'Carlos', age: 31},
+    //         {id: '2', name: 'Antonio', age: 22},
+    //         {id: '3', name: 'Monica', age: 31}
+    //     ],
+    //     otherState: 'Some other value',
+    //     showPersons: false
+    // } //Can only be build on components done like this, extending Component
 
     // switchNameHandler = (newName) => {
     //     //console.log('Was clicked!');
@@ -69,7 +92,7 @@ class App extends Component {
 
     render() {
         //IMPORTANTE: () => this.switchNameHandler('¡Carlitos!') esta sintaxis es conveniente pero puede ser ineficiente, mejor usar bind
-        
+        console.log('[App.js] Inside render()');
         let persons = null;
 
         if(this.state.showPersons) {
