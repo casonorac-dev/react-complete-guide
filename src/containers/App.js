@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 // import logo from './logo.svg';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import classes from './App.css';
 import { throws } from 'assert';
 
-class App extends Component {
+class App extends PureComponent {
     constructor(props) {
         super(props);
         console.log('[App.js] Inside constructor', props);
@@ -26,6 +26,21 @@ class App extends Component {
 
     componentDidMount() {
         console.log('[App.js] Inside componentDidMount()');
+    }
+
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     console.log('[UPDATE App.js] Inside shouldComponentUpdate', nextProps, nextState);
+    //     return nextState.persons !== this.state.persons || 
+    //         nextState.showPersons !== this.state.showPersons;
+    //     // return true;
+    // }
+
+    componentWillUpdate(nextProps, nextState) {
+        console.log('[UPDATE App.js] Inside componentWillUpdate', nextProps, nextState);
+    }
+
+    componentDidUpdate() {
+        console.log('[UPDATE App.js] Inside componentDidUpdate');
     }
 
     //This is modern way to set state (React 16)
@@ -105,6 +120,7 @@ class App extends Component {
         return ( 
             <div className ={classes.App}> 
                 {/* Condition ? if true : if false //Esto es una expresión ternaria */}
+                <button onClick={() => { this.setState({showPersons: true}) }}>Show Persons</button>
                 <Cockpit
                     appTitle={this.props.appTitle}
                     showPersons={this.state.showPersons}
