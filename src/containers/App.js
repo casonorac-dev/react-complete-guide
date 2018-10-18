@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 // import logo from './logo.svg';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import WithClass from '../hoc/WithClass';
+
 import classes from './App.css';
 import { throws } from 'assert';
 
@@ -118,7 +120,7 @@ class App extends PureComponent {
         }
 
         return ( 
-            <div className ={classes.App}> 
+            <WithClass classes ={classes.App}> 
                 {/* Condition ? if true : if false //Esto es una expresión ternaria */}
                 <button onClick={() => { this.setState({showPersons: true}) }}>Show Persons</button>
                 <Cockpit
@@ -127,7 +129,7 @@ class App extends PureComponent {
                     persons={this.state.persons}
                     clicked={this.togglePersonsHandler} />
                 {persons}                
-            </div>
+            </WithClass>
         );
     }
 }
